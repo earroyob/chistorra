@@ -1,4 +1,108 @@
 <!DOCTYPE html>
 <html lang="es">
-<!-- (contenido completo del HTML actual) -->
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Conversor de Euros a Chistorras, Soles, Lechugas y Folios</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      background: #f6f7f9;
+      color: #222;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+    h1 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+    }
+    .container {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      padding: 2rem;
+      width: 320px;
+      text-align: center;
+    }
+    input[type="number"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+    button {
+      background: #333;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 16px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    button:hover {
+      background: #555;
+    }
+    .results {
+      margin-top: 1.5rem;
+      text-align: left;
+    }
+    .results p {
+      margin: 6px 0;
+      font-size: 1rem;
+    }
+    .emoji {
+      width: 1.5em;
+      display: inline-block;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Conversor de Euros</h1>
+    <input type="number" id="euros" placeholder="Introduce euros..." min="0" />
+    <button id="calcular">Calcular</button>
+
+    <div class="results" id="resultados">
+      <p><span class="emoji">🌭</span> Chistorras: <strong>0</strong></p>
+      <p><span class="emoji">☀️</span> Soles: <strong>0</strong></p>
+      <p><span class="emoji">🥬</span> Lechugas: <strong>0</strong></p>
+      <p><span class="emoji">📄</span> Folios: <strong>0</strong></p>
+    </div>
+  </div>
+
+  <script>
+    const precios = {
+      chistorra: 500,
+      sol: 200,
+      lechuga: 100,
+      folio: 50
+    };
+
+    document.getElementById('calcular').addEventListener('click', () => {
+      const euros = parseFloat(document.getElementById('euros').value) || 0;
+
+      const chistorras = Math.floor(euros / precios.chistorra);
+      const soles = Math.floor(euros / precios.sol);
+      const lechugas = Math.floor(euros / precios.lechuga);
+      const folios = Math.floor(euros / precios.folio);
+
+      const resultados = document.getElementById('resultados');
+      resultados.innerHTML = `
+        <p><span class="emoji">🌭</span> Chistorras: <strong>${chistorras}</strong></p>
+        <p><span class="emoji">☀️</span> Soles: <strong>${soles}</strong></p>
+        <p><span class="emoji">🥬</span> Lechugas: <strong>${lechugas}</strong></p>
+        <p><span class="emoji">📄</span> Folios: <strong>${folios}</strong></p>
+      `;
+    });
+  </script>
+
+</body>
 </html>
