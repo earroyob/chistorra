@@ -19,6 +19,7 @@
     h1 {
       font-size: 1.8rem;
       margin-bottom: 1rem;
+      text-align: center;
     }
     .container {
       background: #fff;
@@ -45,6 +46,7 @@
       font-size: 1rem;
       cursor: pointer;
       transition: background 0.2s;
+      width: 100%;
     }
     button:hover {
       background: #555;
@@ -61,6 +63,14 @@
       width: 1.5em;
       display: inline-block;
     }
+    .sobrante {
+      margin-top: 12px;
+      padding-top: 10px;
+      border-top: 1px solid #eee;
+      font-size: 0.95rem;
+      color: #555;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
@@ -75,31 +85,38 @@
       <p><span class="emoji">☀️</span> Soles: <strong>0</strong></p>
       <p><span class="emoji">🥬</span> Lechugas: <strong>0</strong></p>
       <p><span class="emoji">📄</span> Folios: <strong>0</strong></p>
+      <p class="sobrante">Sobrante: <strong>0 €</strong></p>
     </div>
   </div>
 
   <script>
-    const precios = {
-      chistorra: 500,
-      sol: 200,
-      lechuga: 100,
-      folio: 50
-    };
+    const valores = [
+      { nombre: 'chistorra', simbolo: '🌭', valor: 500 },
+      { nombre: 'sol', simbolo: '☀️', valor: 200 },
+      { nombre: 'lechuga', simbolo: '🥬', valor: 100 },
+      { nombre: 'folio', simbolo: '📄', valor: 50 }
+    ];
 
     document.getElementById('calcular').addEventListener('click', () => {
-      const euros = parseFloat(document.getElementById('euros').value) || 0;
+      let euros = parseFloat(document.getElementById('euros').value) || 0;
+      const resultados = {};
 
-      const chistorras = Math.floor(euros / precios.chistorra);
-      const soles = Math.floor(euros / precios.sol);
-      const lechugas = Math.floor(euros / precios.lechuga);
-      const folios = Math.floor(euros / precios.folio);
+      // Cálculo óptimo tipo “cambio de monedas”
+      for (const { nombre, valor } of valores) {
+        resultados[nombre] = Math.floor(euros / valor);
+        euros = euros % valor;
+      }
 
-      const resultados = document.getElementById('resultados');
-      resultados.innerHTML = `
-        <p><span class="emoji">🌭</span> Chistorras: <strong>${chistorras}</strong></p>
-        <p><span class="emoji">☀️</span> Soles: <strong>${soles}</strong></p>
-        <p><span class="emoji">🥬</span> Lechugas: <strong>${lechugas}</strong></p>
-        <p><span class="emoji">📄</span> Folios: <strong>${folios}</strong></p>
+      const sobrante = euros.toFixed(2);
+
+      // Mostrar resultados
+      const div = document.getElementById('resultados');
+      div.innerHTML = `
+        <p><span class="emoji">🌭</span> Chistorras: <strong>${resultados.chistorra}</strong></p>
+        <p><span class="emoji">☀️</span> Soles: <strong>${resultados.sol}</strong></p>
+        <p><span class="emoji">🥬</span> Lechugas: <strong>${resultados.lechuga}</strong></p>
+        <p><span class="emoji">📄</span> Folios: <strong>${resultados.folio}</strong></p>
+        <p class="sobrante">Sobrante: <strong>${sobrante} €</strong></p>
       `;
     });
   </script>
